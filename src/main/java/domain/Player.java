@@ -1,16 +1,9 @@
 package domain;
 
 public class Player {
-    private int currentPosition;
-    private Dice dice;
+    private int currentPosition = 0;
 
     public Player() {
-        currentPosition = 0;
-        dice = new Dice();
-    }
-
-    public Player(Dice dice) {
-        this.dice = dice;
     }
 
     public int getCurrentPosition() {
@@ -21,8 +14,7 @@ public class Player {
         this.currentPosition = currentPosition;
     }
 
-    public void rollDice() {
-        int number = dice.getNumber();
-        setCurrentPosition(getCurrentPosition() + number);
+    public void move(int newPosition) {
+        setCurrentPosition(getCurrentPosition() + newPosition);
     }
 }

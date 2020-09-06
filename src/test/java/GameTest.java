@@ -1,4 +1,5 @@
 import domain.Board;
+import domain.CrookedDice;
 import domain.Dice;
 import domain.Player;
 import domain.Snake;
@@ -20,7 +21,7 @@ public class GameTest {
         Board board = new Board(Collections.singletonList(new Snake(14, 7)));
         Player player = mock(Player.class);
         when(player.getCurrentPosition()).thenReturn(14);
-        Game game = new Game(board, player);
+        Game game = new Game(board, player, new Dice());
         //when
         game.play();
         //then
@@ -32,7 +33,7 @@ public class GameTest {
         Board board = new Board(Collections.singletonList(new Snake(14, 7)));
         Player player = mock(Player.class);
         when(player.getCurrentPosition()).thenReturn(15);
-        Game game = new Game(board, player);
+        Game game = new Game(board, player, new Dice());
         //when
         game.play();
         //then
@@ -43,9 +44,10 @@ public class GameTest {
     public void testMultipleRuns() {
         Board board = new Board(Collections.singletonList(new Snake(9, 7)));
         Dice dice = mock(Dice.class);
-        when(dice.getNumber()).thenReturn(5).thenReturn(4);
-        Player player = new Player(dice);
-        Game game = new Game(board, player);
+        when(dice.roll()).thenReturn(5).thenReturn(4);
+        Player player = new Player();
+        Game game = new Game(board, player, dice);
+
         //when
         game.play();
         //then
@@ -55,5 +57,24 @@ public class GameTest {
         game.play();
         //then
         assertEquals(7, player.getCurrentPosition());
+    }
+
+    @Test
+    public void shouldReturnCorrectlyWhenDiceIsCrooked() {
+        Board board = new Board(Collections.singletonList(new Snake(9, 7)));
+        Dice dice = mock(CrookedDice.class);
+        when(dice.roll()).thenReturn(4).thenReturn(2);
+        Player player = new Player();
+        Game game = new Game(board, player, dice);
+
+        //when
+        game.play();
+        //then
+        assertEquals(4, game.getPlayer().getCurrentPosition());
+
+        //when
+        game.play();
+        //then
+        assertEquals(6, game.getPlayer().getCurrentPosition());
     }
 }
