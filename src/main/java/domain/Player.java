@@ -9,6 +9,10 @@ public class Player {
         dice = new Dice();
     }
 
+    public Player(Dice dice) {
+        this.dice = dice;
+    }
+
     public int getCurrentPosition() {
         return currentPosition;
     }

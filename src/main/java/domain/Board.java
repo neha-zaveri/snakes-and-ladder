@@ -1,20 +1,25 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
-    private int size;
-    private Player player;
+    private int size = 100;
+    private List<Snake> snakes = new ArrayList<>();
 
     public Board() {
-        this.size = 100;
-        this.player = new Player();
+        snakes.add(new Snake(14, 7));
     }
 
-    public Player getPlayer() {
-        return player;
+    public Board(List<Snake> snakes) {
+        this.snakes = snakes;
     }
 
     public int getSize() {
         return size;
     }
 
+    public List<Snake> getSnakes() {
+        return snakes;
+    }
 }
